@@ -1,0 +1,37 @@
+xavccClient.class.php
+
+This class exposes several methods in order to encode or decode short URLs 
+using xav.cc. Here are some usage samples:
+
+<?php
+// create a client
+$client = new xavccClient();
+
+// encode a url
+$encoded_url = $client->encode('http://lacot.org/');
+// The value of $encoded_url is "http://xav.cc/xavier"
+
+// encode a url, with a specific alias
+$encoded_url = $client->encode('http://lacot.org/', 'my-personnalized-alias');
+// The value of $encoded_url is "http://xav.cc/my-personnalized-alias"
+
+// decode a short URL
+$long_url = $client->decode('http://xav.cc/xavier');
+// The value of $long_url is "http://lacot.org/"
+
+// decode a short URL, with only the alias
+$long_url = $client->decode('xavier');
+// The value of $long_url is "http://lacot.org/"
+
+
+// The client communicates with xav.cc through the API. It can either use the
+// simple API, or the json or the xml ones. This has to be declared in the
+// constructor, and defaults to the "json" API:
+$client = new xavccClient();
+$client = new xavccClient('simple');   // uses the simple API
+$client = new xavccClient('json');     // uses the REST API, with json as serialization support
+$client = new xavccClient('xml');      // uses the REST API, with xml as serialization support
+?>
+
+Every time the API call fails, for whatever reason, a call to the encode()
+and decode() methods will return the value false.
