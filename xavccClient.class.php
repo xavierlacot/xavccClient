@@ -10,8 +10,8 @@ class xavccClient
 {
   protected
     $adapter          = null,
-    $redirection_tool = 'http://local.xav.cc/',
-    $server           = 'http://local.api.xav.cc/api_dev.php/',
+    $redirection_tool = 'http://xav.cc/',
+    $server           = 'http://api.xav.cc/',
     $services         = array(
       'json'   => 'sf_short_url.json',
       'simple' => 'simple',
@@ -54,7 +54,9 @@ class xavccClient
 
 class xavccClientAdapter
 {
-  protected $server = null;
+  protected
+    $server = null,
+    $user_agent = 'xavccClient/0.1';
 
   public function __construct($server = 'http://api.xav.cc')
   {
@@ -63,6 +65,8 @@ class xavccClientAdapter
     curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, false);
     curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($this->curl, CURLOPT_USERAGENT, $this->user_agent);
+    curl_setopt($this->curl, CURLOPT_HEADER, false);
     curl_setopt($this->curl, CURLOPT_AUTOREFERER, true);
     curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($this->curl, CURLOPT_FRESH_CONNECT, true);
